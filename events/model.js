@@ -3,7 +3,7 @@ const sequelize = require('../db')
 
 // Model without date limitation / range
 
-const Event = sequelize.define('event', {
+const Events = sequelize.define('event', {
   title: {
     type: Sequelize.STRING,
     allowNull: false
@@ -12,16 +12,15 @@ const Event = sequelize.define('event', {
     type: Sequelize.STRING,
     allowNull: true
   },
-  startDate: {
+  startdate: {
     type: Sequelize.DATE,
     allowNull: false
   },
-  endDate: Sequelize.DATE,
-  allowNull: false
-}, {
+  enddate: Sequelize.DATE
+  }, {
   tableName: 'events',
   timestamps: false
 })
 
 
-module.exports = Event
+module.exports = Events
