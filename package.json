@@ -3,8 +3,13 @@
   "version": "1",
   "description": "Events assignment",
   "main": "index.js",
-  "author": "FStriewski <fstriewski@outlook.com>",
+  "author": "",
   "license": "MIT",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon --inspect .",
+    "sequelize": "node_modules/.bin/sequelize"
+  },
   "dependencies": {
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
