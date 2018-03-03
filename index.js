@@ -12,6 +12,8 @@ const app = express()
   app.use(bodyParser.json())
 
 
+// READ
+
   app.get('/events', (req, res) => {
      const events = Events
      .findAll()
@@ -20,15 +22,47 @@ const app = express()
          res.json(events)
        } else {
            res.status(404)
-           res.json({ message: "Stuff not found"})
+           res.json({ message: "Event not found"})
        }
      })
      .catch(err => {
        console.log(err)
        res.status(500)
-       res.json({message: "There was an error"})
+       res.json({message: "There was a server error"})
      })
 })
+
+
+  app.get('/events/:id', (req, res) => {
+    const events = Events
+    .findById(req.params.id)
+    .then(events => {
+      if(events){
+        res.json(events)
+      } else {
+          res.status(404)
+          res.json({ message: "Event not found"})
+      }
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500)
+      res.json({message: "There was a server error"})
+    })
+  })
+
+
+// Will require some input validation
+  app.post('/events', (req, res) => {
+      const events = req.body
+      console.log(events)
+
+      Events.create(events).then(entity => {
+        res.status(201).send(entity)
+      })
+
+    })
+
 
 
 
