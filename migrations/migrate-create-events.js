@@ -2,7 +2,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('events', {
-
+      timestamps: false,
       id: {
         allowNull: false,
         autoIncrement: true,

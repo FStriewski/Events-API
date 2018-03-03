@@ -53,15 +53,15 @@ const app = express()
 // Will require some input validation
   app.post('/events', (req, res) => {
       const events = req.body
-      //console.log(req.body)
-      if (true){
-      Events.create(events).then(entity => {
+
+      Events.create(events)
+      .then(entity => {
         res.status(201).send(entity)
       })
-    } else {
-              res.json({ message: "Not possible"})
-    }
-
+      .catch(err => {
+        res.status(500)
+        res.json({message: "There was an error. Date(s) failed validation."})
+      })
   })
 
 // Will require some update validation
