@@ -2,6 +2,7 @@ const Sequelize = require('sequelize')
 const sequelize = require('../db')
 
 // Model without date limitation / range
+let now = Date.now()
 
 const Events = sequelize.define('event', {
   title: {
@@ -13,10 +14,28 @@ const Events = sequelize.define('event', {
     allowNull: true
   },
   startdate: {
-    type: Sequelize.DATE
+    type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW,
+    validate: {    }
   },
-  enddate: Sequelize.DATE
-  }, {
+  enddate: {
+    type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW,
+    validate: {    }
+  }
+}, {
+  validate: {
+    compareStartToEnd() {
+      if (this.startdate < new Date){
+        throw new Error('StartDate is the past!')
+      }
+      else if (this.enddate < this.startdate){
+        throw new Error('EndDate is smaller than StartDate!')
+      }
+    }
+  }
+} ,
+  {
   tableName: 'events',
   timestamps: false
 })

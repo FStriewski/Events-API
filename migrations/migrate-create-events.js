@@ -18,7 +18,10 @@ module.exports = {
         allowNull: true
       },
       startdate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        validate: {
+          isAfter: "2000-01-01",
+          }
       },
       enddate: {
         type: Sequelize.DATE

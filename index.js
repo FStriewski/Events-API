@@ -30,8 +30,7 @@ const app = express()
        res.status(500)
        res.json({message: "There was a server error"})
      })
-})
-
+  })
 
   app.get('/events/:id', (req, res) => {
     const events = Events
@@ -51,17 +50,19 @@ const app = express()
     })
   })
 
-
 // Will require some input validation
   app.post('/events', (req, res) => {
       const events = req.body
-      console.log(events)
-
+      //console.log(req.body)
+      if (true){
       Events.create(events).then(entity => {
         res.status(201).send(entity)
       })
+    } else {
+              res.json({ message: "Not possible"})
+    }
 
-    })
+  })
 
 // Will require some update validation
     app.put('/events/:id', (req, res) => {
@@ -93,25 +94,24 @@ const app = express()
 
     app.delete('/events/:id', (req, res) => {
       const eventId = Number(req.params.id)
-
-    Events.findById(req.params.id)
-    .then(entity => {
-        return entity.destroy()
-        res.json({ message: "Event not found, can't delete event"})
-    })
-    .then(_ => {
-      res.status(200)
-      res.send({
-        message: 'The event has been removed'
+      Events.findById(req.params.id)
+      .then(entity => {
+          return entity.destroy()
+          res.json({ message: "Event not found, can't delete event"})
       })
-    })
-    .catch(error => {
-      res.status(500).send({
-        message: `There was a server error`,
-        error
+      .then(_ => {
+        res.status(200)
+        res.send({
+          message: 'The event has been removed'
+        })
       })
-    })
-})
+      .catch(error => {
+        res.status(500).send({
+          message: `There was a server error`,
+          error
+        })
+      })
+  })
 
 
 
