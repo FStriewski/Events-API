@@ -63,7 +63,33 @@ const app = express()
 
     })
 
+// Will require some update validation
+    app.put('/events/:id', (req, res) => {
+      const eventsId = Number(req.params.id)
+      const updates = req.body
 
+      // find event
+      Events.findById(req.params.id)
+        .then(entity => {
+          if(entity){
+            return entity.update(updates)
+          } else {
+            res.status(404)
+            res.json({ message: "Event not found, can't update event"})
+          }
+        })
+        .then(final => {
+          // return update
+          res.status(200)
+          res.send(final)
+        })
+        .catch(error => {
+          res.status(500).send({
+            message: `There was a server error`,
+            error
+          })
+        })
+    })
 
 
 
