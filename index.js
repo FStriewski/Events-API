@@ -91,6 +91,28 @@ const app = express()
         })
     })
 
+    app.delete('/events/:id', (req, res) => {
+      const eventId = Number(req.params.id)
+
+    Events.findById(req.params.id)
+    .then(entity => {
+        return entity.destroy()
+        res.json({ message: "Event not found, can't delete event"})
+    })
+    .then(_ => {
+      res.status(200)
+      res.send({
+        message: 'The event has been removed'
+      })
+    })
+    .catch(error => {
+      res.status(500).send({
+        message: `There was a server error`,
+        error
+      })
+    })
+})
+
 
 
 app.listen(4001, () => console.log('Express API listening on port 4001'))
