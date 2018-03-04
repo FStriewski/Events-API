@@ -12,7 +12,8 @@ const Events = sequelize.define('event', {
   },
   startdate: {
     type: Sequelize.DATE,
-    defaultValue: Sequelize.NOW
+    defaultValue: Sequelize.NOW,
+    allowNull: false
   },
   enddate: {
     type: Sequelize.DATE

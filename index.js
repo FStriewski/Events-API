@@ -14,17 +14,20 @@ const app = express()
 // READ
 
   app.get('/events', (req, res) => {
+     let currentDate = new Date
+     const Op = Sequelize.Op;
+
+     // Filter on assignment restrictions: Output attributes and startdate limitation (future events only)
      const events = Events
      .findAll({
-       attributes: ['title','startdate', 'enddate']
+       attributes: ['title','startdate', 'enddate'],
+        where: {
+          startdate: {
+            [Op.gte]: currentDate
+          }}
       })
      .then(events => {
-       if(events){
          res.json(events)
-       } else {
-           res.status(404)
-           res.json({ message: "Event not found"})
-       }
      })
      .catch(err => {
        console.log(err)
