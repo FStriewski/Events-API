@@ -11,12 +11,13 @@ const app = express()
   app.use(cors())
   app.use(bodyParser.json())
 
-
 // READ
 
   app.get('/events', (req, res) => {
      const events = Events
-     .findAll()
+     .findAll({
+       attributes: ['title','startdate', 'enddate']
+      })
      .then(events => {
        if(events){
          res.json(events)
@@ -63,8 +64,7 @@ const app = express()
       })
   })
 
-// Will require some update validation
-    app.put('/events/:id', (req, res) => {
+  app.put('/events/:id', (req, res) => {
       const eventsId = Number(req.params.id)
       const updates = req.body
 
@@ -91,7 +91,7 @@ const app = express()
         })
     })
 
-    app.delete('/events/:id', (req, res) => {
+  app.delete('/events/:id', (req, res) => {
       const eventId = Number(req.params.id)
       Events.findById(req.params.id)
       .then(entity => {
@@ -111,7 +111,5 @@ const app = express()
         })
       })
   })
-
-
 
 app.listen(4001, () => console.log('Express API listening on port 4001'))
