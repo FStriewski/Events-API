@@ -1,0 +1,15 @@
+--Read Data:
+http :4001/events
+http :4001/events/1
+
+--Create Data:
+http post :4001/events title="CreateValidEvent" description="Should go through" startdate="2019-01-01" enddate="2022-01-01"
+http post :4001/events title="ViolateStartDate" description="Should flag error" startdate="1019-01-01" enddate="2022-01-01"
+http post :4001/events title="ViolateStartDateAfterEndDate" description="Should flag error" startdate="2019-01-01" enddate="2022-01-01"
+
+--Update Data:
+http put :4001/events/1 title="MyTestEvent"
+http :4001/events
+
+--Delete Data:
+http delete :4001/events/4
