@@ -50,7 +50,6 @@ const app = express()
     })
   })
 
-// Will require some input validation
   app.post('/events', (req, res) => {
       const events = req.body
 
@@ -85,9 +84,9 @@ const app = express()
           res.send(final)
         })
         .catch(error => {
-          res.status(500).send({
-            message: `There was a server error`,
-            error
+          res.status(500)
+          res.json({
+            message: "There was an error. Date(s) failed validation - no update."
           })
         })
     })

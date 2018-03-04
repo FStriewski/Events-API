@@ -2,7 +2,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('events', {
-      timestamps: false,
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -18,10 +17,7 @@ module.exports = {
         allowNull: true
       },
       startdate: {
-        type: Sequelize.DATE,
-        validate: {
-          isAfter: "2000-01-01",
-          }
+        type: Sequelize.DATE
       },
       enddate: {
         type: Sequelize.DATE

@@ -12,23 +12,20 @@ const Events = sequelize.define('event', {
   },
   startdate: {
     type: Sequelize.DATE,
-    defaultValue: Sequelize.NOW,
-    validate: {    }
+    defaultValue: Sequelize.NOW
   },
   enddate: {
     type: Sequelize.DATE
-  //  defaultValue: Sequelize.NOW,
-  //  validate: {    }
   }
 },{
   timestamps: false,
   createdAt: false,
   updatedAt: false,
   validate: {
-    compareStartToEnd() {
-         // if (this.startdate < new Date){
-         //   throw new Error('StartDate is the past!')
-         // }
+    validateDateInput() {
+      if (this.startdate < new Date ){
+            throw new Error('StartDate is the past!')
+      }
       if (this.enddate < this.startdate){
         throw new Error('EndDate is smaller than StartDate!')
       }
@@ -39,6 +36,5 @@ const Events = sequelize.define('event', {
   tableName: 'events',
   timestamps: false
 })
-
 
 module.exports = Events
